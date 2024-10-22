@@ -1,0 +1,122 @@
+pip install opencv-python
+
+**Aumenta a quantidade de pixels**
+
+import cv2
+
+# Função para mudar a resolução da imagem
+def mudar_resolucao(caminho_imagem, nova_largura, nova_altura):
+    # Carregar a imagem
+    imagem = cv2.imread(caminho_imagem)
+
+    # Mudar a resolução
+    imagem_redimensionada = cv2.resize(imagem, (nova_largura, nova_altura))
+
+    # Mostrar a imagem original e a imagem redimensionada
+    cv2.imshow('Imagem Original', imagem)
+    cv2.imshow('Imagem Redimensionada', imagem_redimensionada)
+
+    # Esperar até que uma tecla seja pressionada
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+# Caminho da imagem e nova resolução
+caminho = 'sua_imagem.jpg'
+nova_largura = 800  # Ajuste a largura desejada
+nova_altura = 600   # Ajuste a altura desejada
+mudar_resolucao(caminho, nova_largura, nova_altura)
+
+
+**Aumenta o brilho**
+
+import cv2
+
+# Função para aumentar o brilho da imagem
+def aumentar_brilho(caminho_imagem, valor_brilho):
+    # Carregar a imagem
+    imagem = cv2.imread(caminho_imagem)
+
+    # Aumentar o brilho
+    imagem_brilho = cv2.convertScaleAbs(imagem, alpha=1, beta=valor_brilho)
+
+    # Mostrar a imagem original e a imagem com brilho aumentado
+    cv2.imshow('Imagem Original', imagem)
+    cv2.imshow('Imagem com Brilho Aumentado', imagem_brilho)
+
+    # Esperar até que uma tecla seja pressionada
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+# Caminho da imagem e valor de brilho
+caminho = 'sua_imagem.jpg'
+valor_brilho = 50  # Ajuste este valor conforme necessário
+aumentar_brilho(caminho, valor_brilho)
+
+
+**Melhora a qualidade de imagem**
+
+import cv2
+import numpy as np
+
+# Função para melhorar a imagem
+def melhorar_imagem(caminho_imagem):
+    # Carregar a imagem
+    imagem = cv2.imread(caminho_imagem)
+
+    # Aumentar o contraste usando CLAHE (Contrast Limited Adaptive Histogram Equalization)
+    lab = cv2.cvtColor(imagem, cv2.COLOR_BGR2Lab)
+    l, a, b = cv2.split(lab)
+    clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
+    cl = clahe.apply(l)
+    limg = cv2.merge((cl, a, b))
+    imagem_contraste = cv2.cvtColor(limg, cv2.COLOR_Lab2BGR)
+
+    # Aumentar a nitidez usando um filtro de nitidez
+    kernel = np.array([[0, -1, 0],
+                       [-1, 5, -1],
+                       [0, -1, 0]])
+    imagem_nitida = cv2.filter2D(imagem_contraste, -1, kernel)
+
+    # Mostrar a imagem original e a imagem melhorada
+    cv2.imshow('Imagem Original', imagem)
+    cv2.imshow('Imagem Melhorada', imagem_nitida)
+
+    # Esperar até que uma tecla seja pressionada
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+# Caminho da imagem
+caminho = 'sua_imagem.jpg'
+melhorar_imagem(caminho)
+
+**Aumenta a saturação**
+
+import cv2
+import numpy as np
+
+# Função para aumentar a saturação da imagem
+def aumentar_saturacao(caminho_imagem, fator_saturacao):
+    # Carregar a imagem
+    imagem = cv2.imread(caminho_imagem)
+
+    # Converter a imagem para o espaço de cores HSV
+    imagem_hsv = cv2.cvtColor(imagem, cv2.COLOR_BGR2HSV)
+
+    # Aumentar a saturação
+    imagem_hsv[:, :, 1] = cv2.normalize(imagem_hsv[:, :, 1], None, 0, 255, cv2.NORM_CLIP)
+
+    # Converter de volta para o espaço de cores BGR
+    imagem_saturada = cv2.cvtColor(imagem_hsv, cv2.COLOR_HSV2BGR)
+
+    # Mostrar a imagem original e a imagem com saturação aumentada
+    cv2.imshow('Imagem Original', imagem)
+    cv2.imshow('Imagem com Saturação Aumentada', imagem_saturada)
+
+    # Esperar até que uma tecla seja pressionada
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+# Caminho da imagem e fator de saturação
+caminho = 'sua_imagem.jpg'
+fator_saturacao = 1.5  # Ajuste este valor conforme necessário
+aumentar_saturacao(caminho, fator_saturacao)
